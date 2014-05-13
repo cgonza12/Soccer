@@ -1,0 +1,23 @@
+Cross-validation plan
+
+Take ZINB model from full data train and test on 100 randomized splits of the main data
+- monitor main effect of skin tone and LL and UL CIs
+- monitor if its significant
+- monitor RMSE sqrt(mean(residuals(mymodel)^2))
+- monitor AIC
+
+for( i in 1:nReps){
+x = sample(1:nrow(data),nrow(data)/2)
+trainingdata = data[x]
+valdata = data[!x]
+
+tempmodel = zeroinfl(y~x1+x2....xj, data=traningdata)
+
+prediction = predict(valdata[-y],tempmodel)
+
+RMSE = sqrt(mean((prediction$predictedvals - valdata$y)^2))
+theta = coef(tempmodel)$thetai
+
+
+
+}
