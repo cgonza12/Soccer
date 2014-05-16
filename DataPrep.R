@@ -109,3 +109,33 @@ contrasts(data.playerz$country) = contr.sum(length(levels(data.playerz$country))
 colnames(contrasts(data.playerz$country)) = levels(data.playerz$country)[-length(
   levels(data.playerz$country))]
 
+
+############# Sumarize data by ref #####################
+
+#create a trichotomous variable 1-2.5 = light, 3.5-5 = dark, 3 = neither
+data$tonesplit = ifelse(data$meanrating>3.5,
+                               "dark",ifelse(data$meanrating<3,"light","neither"))
+
+data.ref = ddply(data,.(refNum,tonesplit),summarize,
+                    # total red cards
+                    totalReds = sum(redCards),
+                    # total yellow cards
+                    totalYellows = sum(yellowCards),
+                    # total yellow then red cards
+                    totalyellowReds = sum(yellowReds),
+                    
+                    # IAt
+                    meanIAT = meanIAT[1],
+                    nIAT = nIAT[1],
+                    seIAT = seIAT[1],
+                    # EXP
+                    meanExp = meanExp[1],
+                    nExp = nExp[1],
+                    seExp = seExp[1],
+                    
+                    games = sum(games)
+)
+# remove NAs
+data.player= na.omit(data.player)
+
+

@@ -54,12 +54,19 @@ thetadf$predictor = predictors
 
 fitdf = data.frame(do.call(rbind,fitlist))
 
+write.csv(thetadf,"CrossValthetaout.csv")
+write.csv(thetadf,"CrossValfitout.csv")
+
 hist(fitdf$AICi)
 hist(fitdf$RMSEi)
 
-AIC(fit3)/nrow(data.playerz)
-sqrt(mean(residuals(fit3)^2))
-hist(fitdf$AICi/nrow(data.playerz)*.75)
+AIC(m2)/nrow(data.playerz)
+mean(fitdf$AICi/(nrow(data.playerz)*.80))
+hist(fitdf$AICi/(nrow(data.playerz)*.80))
+
+mean(fitdf$RMSEi)
+sqrt(mean(residuals(m2)^2))
+
 
 skintoneest = thetadf[thetadf$predictor=="skintone",]
 hist(skintoneest$Estimate)
@@ -75,4 +82,4 @@ hist(skintoneint$Estimate)
 hist(skintoneint$'2.5 %')
 sum(skintoneint$'2.5 %'<1)/nReps
 
-round(exp(cbind(Estimate = coef(fit4), confint(fit4))),2)
+round(exp(cbind(Estimate = coef(m2), confint(m2))),2)

@@ -17,7 +17,7 @@ m1 <-glm(totalReds ~skintone+totalYellows+height+age+
 
 # Negative binomial Full model
 m2 <- glm.nb(totalReds ~ skintone+totalYellows+height+age+
-               wins.loss+goals+pos+country+skintone:country++offset(log(games))
+               wins.loss+goals+pos+country+skintone:country+offset(log(games))
                   ,data = data.playerz)
 
 # Negative binomial backwards and forwards stepwise fit by AIC testing all 2 way interactions
